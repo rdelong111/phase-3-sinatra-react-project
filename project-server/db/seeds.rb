@@ -1,5 +1,5 @@
 puts "🌱 Seeding spices..."
 
-# Seed your database here
+Classification.create([{class: "Pro"}, {class: "Amateur"}, {class: "None"}])
 
 puts "✅ Done seeding!"
