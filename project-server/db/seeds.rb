@@ -13,6 +13,24 @@ Golfer.create(
   sponsored: false,
   classification_id: 2
 )
+Golfer.create(
+  name: "Alexis DeLong",
+  location: "Fort Walton Beach, FL",
+  age: 26,
+  pdga_number: 0,
+  current_rating: 0,
+  sponsored: false,
+  classification_id: 3
+)
+Golfer.create(
+  name: "Brodie Smith",
+  location: "Dallas, TX",
+  age: 25,
+  pdga_number: 128378,
+  current_rating: 1022,
+  sponsored: true,
+  classification_id: 1
+)
 
 Manufacturer.create(name: "MVP")
 Manufacturer.create(name: "Innova")

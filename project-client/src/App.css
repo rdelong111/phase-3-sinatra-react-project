@@ -32,3 +32,11 @@ body {
 table, th, td, table caption {
   border: 1px solid #000000;
 }
+
+#add_disc {
+  margin-bottom: 5px;
+}
+
+#change_golfer select {
+  margin-top: 10px;
+}

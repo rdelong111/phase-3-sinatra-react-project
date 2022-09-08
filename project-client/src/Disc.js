@@ -31,6 +31,8 @@ function Disc({disc}) {
       <td>{typeData.type}</td>
       <td>{manuData.manufacturer}</td>
       <td>{ownerData.owner}</td>
+      <td><button>Edit</button></td>
+      <td><button>X</button></td>
     </tr>
   )
 }

@@ -1,18 +1,22 @@
 import React, {useState, useEffect} from "react";
-import Discs from "./Discs"
+import Discs from "./Discs";
+import Golfer from "./Golfer";
+import AddDiscForm from "./AddDiscForm";
 
 function App() {
+  const [isLoaded, setLoaded] = useState(false);
   const [discs, setDiscs] = useState([]);
-  const [golfer, setGolfer] = useState({
-    name: "",
-    location: "",
-    age: 0,
-    pdga_number: 0,
-    current_rating: 0,
-    sponsored: false,
-    classification_id: 1
-  });
+  const [golfer, setGolfer] = useState([]);
   const [classifications, setClasses] = useState([{name: "None"}]);
+  const [types, setTypes] = useState([]);
+  const [manufacturers, setManufacturers] = useState([]);
+  const [active_add_disc, setActiveDisc] = useState(false);
+  const add_disc_btn = (
+    <button id="add_disc" onClick={() => setActiveDisc(true)}>Add Disc</button>
+  );
+  const add_disc_form = (
+    <AddDiscForm types={types} manufacturers={manufacturers} golfers={golfer} />
+  );
 
   useEffect(() => {
     fetch("http://localhost:9292/discs")
@@ -21,28 +25,30 @@ function App() {
 
     fetch("http://localhost:9292/golfers")
       .then((r) => r.json())
-      .then((userData) => setGolfer(userData[0]));
+      .then((userData) => {
+        setGolfer(userData)
+        setLoaded(true);
+      });
 
     fetch("http://localhost:9292/classifications")
       .then((r) => r.json())
       .then((classData) => setClasses(classData));
+      
+    fetch("http://localhost:9292/types")
+      .then((r) => r.json())
+      .then((typeData) => setTypes(typeData));
+
+    fetch("http://localhost:9292/manufacturers")
+      .then((r) => r.json())
+      .then((manuData) => setManufacturers(manuData));
   }, []);
 
+  if (!isLoaded) return <h1>Loading...</h1>
   return (
     <div id="the_app">
-      <div id="golfer_container" className="container">
-        <figure>
-          <img src="https://www.logolynx.com/images/logolynx/fd/fd76507f2630314efc5b6772dd903079.jpeg" alt="PDGA Symbol" />
-          <figcaption>{golfer.name}</figcaption>
-        </figure>
-        <p>PDGA Number: {golfer.pdga_number}</p>
-        <p>Age: {golfer.age}</p>
-        <p>Location: {golfer.location}</p>
-        <p>Classification: {classifications[golfer.classification_id - 1].name}</p>
-        <p>Current Rating: {golfer.current_rating}</p>
-        <p>Sponsored: {golfer.sponsored ? "👍" : "👎"}</p>
-      </div>
+      <Golfer golfers={golfer} classifications={classifications} />
       <div id="disc_container" className="container">
+        {active_add_disc ? add_disc_form : add_disc_btn}
         <table>
           <thead>
             <tr>
@@ -56,6 +62,8 @@ function App() {
               <th>Type</th>
               <th>Manufacturer</th>
               <th>Owner</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <Discs discs={discs}/>
