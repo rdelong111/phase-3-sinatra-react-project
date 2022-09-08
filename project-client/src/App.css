@@ -5,3 +5,30 @@
 body {
   background-color: #808080;
 }
+
+#the_app {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px;
+}
+
+.container {
+  text-align: center;
+  align-self: center;
+  margin: 5px;
+  padding: 15px;
+}
+
+#golfer_container {
+  border: 1px solid #000000;
+}
+
+#golfer_container figure img {
+  width: 50%;
+  height: auto;
+}
+
+table, th, td, table caption {
+  border: 1px solid #000000;
+}

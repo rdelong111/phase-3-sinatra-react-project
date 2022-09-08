@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import Disc from "./Disc"
+import Discs from "./Discs"
 
 function App() {
   const [discs, setDiscs] = useState([]);
@@ -28,13 +28,9 @@ function App() {
       .then((classData) => setClasses(classData));
   }, []);
 
-  const theDiscs = discs.map((disc) => (
-    <Disc key={disc.id} disc={disc}/>
-  ));
-
   return (
-    <div>
-      <div id="golfer_container">
+    <div id="the_app">
+      <div id="golfer_container" className="container">
         <figure>
           <img src="https://www.logolynx.com/images/logolynx/fd/fd76507f2630314efc5b6772dd903079.jpeg" alt="PDGA Symbol" />
           <figcaption>{golfer.name}</figcaption>
@@ -46,7 +42,7 @@ function App() {
         <p>Current Rating: {golfer.current_rating}</p>
         <p>Sponsored: {golfer.sponsored ? "👍" : "👎"}</p>
       </div>
-      <div id="disc_container">
+      <div id="disc_container" className="container">
         <table>
           <thead>
             <tr>
@@ -62,8 +58,7 @@ function App() {
               <th>Owner</th>
             </tr>
           </thead>
-          <tbody>
-          </tbody>
+          <Discs discs={discs}/>
         </table>
       </div>
     </div>
