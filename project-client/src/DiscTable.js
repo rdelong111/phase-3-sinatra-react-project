@@ -1,0 +1,78 @@
+import React, {useState, useEffect} from "react";
+import Discs from "./Discs";
+import AddDiscForm from "./AddDiscForm";
+
+function DiscTable({types, manufacturers, golfers}) {
+  const [discs, setDiscs] = useState([]);
+  const [active_add_disc, setActiveDisc] = useState(false);
+  const add_disc_btn = (
+    <button id="add_disc" onClick={() => setActiveDisc(true)}>Add Disc</button>
+  );
+  const add_disc_form = (
+    <AddDiscForm 
+      types={types}
+      manufacturers={manufacturers}
+      golfers={golfers}
+    />
+  );
+  const golfer_bag_options = golfers.map((golfer) => (
+    <option key={golfer.id} value={golfer.id}>{golfer.name}</option>
+  ));
+
+  function handleBagChange(e) {
+    if (e.target.value === '0') {
+      getAllDiscs();
+    }
+    else {
+      fetch(`http://localhost:9292/golfers/${e.target.value}/owned_disc`)
+        .then((r) => r.json())
+        .then((discData) => setDiscs(discData));
+    }
+  }
+
+  function getAllDiscs() {
+    fetch("http://localhost:9292/discs")
+      .then((r) => r.json())
+      .then((discData) => setDiscs(discData));
+  }
+
+  useEffect(() => {
+    getAllDiscs();
+  }, []);
+
+  return (
+    <>
+    <div id="disc_container" className="container">
+        <label>
+          {"Show Golfer Bag: "}
+          <select onChange={handleBagChange}>
+            <option value={0}>All</option>{golfer_bag_options}
+          </select>
+        </label>
+        {active_add_disc ? null : add_disc_btn}
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Plastic</th>
+              <th>Weight {"(g)"}</th>
+              <th>Speed</th>
+              <th>Glide</th>
+              <th>Turn</th>
+              <th>Fade</th>
+              <th>Type</th>
+              <th>Manufacturer</th>
+              <th>Owner</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <Discs discs={discs}/>
+        </table>
+      </div>
+      {active_add_disc ? add_disc_form : null}
+    </>
+  )
+}
+
+export default DiscTable;

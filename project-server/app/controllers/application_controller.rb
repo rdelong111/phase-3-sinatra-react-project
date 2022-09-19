@@ -22,6 +22,10 @@ class ApplicationController < Sinatra::Base
     Golfer.find(params[:id]).to_json
   end
 
+  get "/golfers/:id/owned_disc" do
+    Golfer.find(params[:id]).discs.all.to_json
+  end
+
   get "/manufacturers" do
     Manufacturer.all.to_json
   end

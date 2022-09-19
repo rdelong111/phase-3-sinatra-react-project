@@ -50,6 +50,7 @@ table, th, td, table caption {
 
 #add_disc {
   margin-bottom: 5px;
+  margin-left: 10px;
 }
 
 #change_golfer select {
