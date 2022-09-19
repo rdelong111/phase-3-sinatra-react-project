@@ -15,7 +15,11 @@ function App() {
     <button id="add_disc" onClick={() => setActiveDisc(true)}>Add Disc</button>
   );
   const add_disc_form = (
-    <AddDiscForm types={types} manufacturers={manufacturers} golfers={golfer} />
+    <AddDiscForm 
+      types={types}
+      manufacturers={manufacturers}
+      golfers={golfer}
+    />
   );
 
   useEffect(() => {
@@ -48,7 +52,7 @@ function App() {
     <div id="the_app">
       <Golfer golfers={golfer} classifications={classifications} />
       <div id="disc_container" className="container">
-        {active_add_disc ? add_disc_form : add_disc_btn}
+        {active_add_disc ? null : add_disc_btn}
         <table>
           <thead>
             <tr>
@@ -69,6 +73,7 @@ function App() {
           <Discs discs={discs}/>
         </table>
       </div>
+      {active_add_disc ? add_disc_form : null}
     </div>
   );
 }
