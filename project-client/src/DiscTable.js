@@ -13,6 +13,7 @@ function DiscTable({types, manufacturers, golfers}) {
       types={types}
       manufacturers={manufacturers}
       golfers={golfers}
+      onFormCancel={() => setActiveDisc(false)}
     />
   );
   const golfer_bag_options = golfers.map((golfer) => (
@@ -67,7 +68,7 @@ function DiscTable({types, manufacturers, golfers}) {
               <th></th>
             </tr>
           </thead>
-          <Discs discs={discs}/>
+          <Discs discs={discs} types={types} manufacturers={manufacturers} golfers={golfers}/>
         </table>
       </div>
       {active_add_disc ? add_disc_form : null}
