@@ -44,7 +44,7 @@ function DiscTable({types, manufacturers, golfers}) {
       .then((discData) => setDiscs(discData));
   }
 
-  function handleDiscSubmit(disc, currentBag=shownBag) {
+  function handleDiscSubmit(disc) {
     fetch("http://localhost:9292/discs", {
       method: "POST",
       headers: {
@@ -54,10 +54,21 @@ function DiscTable({types, manufacturers, golfers}) {
     })
       .then((r) => r.json())
       .then((discData) => {
-        if (discData.golfer_id === parseInt(currentBag)) {
+        if (discData.golfer_id === parseInt(shownBag) || shownBag === "0") {
           setDiscs([...discs, discData]);
         }
         setActiveDiscForm(false);
+      });
+  }
+
+  function handleDiscDelete(discID) {
+    fetch(`http://localhost:9292/discs/${discID}`, {
+      method: "DELETE"
+    })
+      .then((r) => r.json())
+      .then((discData) => {
+        const updatedDiscs = discs.filter((disc) => discData.id !== disc.id);
+        setDiscs(updatedDiscs);
       });
   }
 
@@ -92,7 +103,7 @@ function DiscTable({types, manufacturers, golfers}) {
               <th></th>
             </tr>
           </thead>
-          <Discs discs={discs} types={types} manufacturers={manufacturers} golfers={golfers}/>
+          <Discs discs={discs} types={types} manufacturers={manufacturers} golfers={golfers} onDiscDelete={handleDiscDelete}/>
         </table>
       </div>
       {active_add_disc ? add_disc_form : null}

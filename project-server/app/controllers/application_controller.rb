@@ -57,4 +57,10 @@ class ApplicationController < Sinatra::Base
     )
     new_disc.to_json
   end
+
+  delete "/discs/:id" do
+    disc = Disc.find(params[:id])
+    disc.destroy
+    disc.to_json
+  end
 end

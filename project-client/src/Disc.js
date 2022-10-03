@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-function Disc({disc, types, manufacturers, golfers}) {
+function Disc({disc, types, manufacturers, golfers, onDiscDelete}) {
   const [editOn, setEdit] = useState(false);
   const [typeData, setType] = useState({type: ''});
   const [manuData, setManu] = useState({manufacturer: ''});
@@ -55,7 +55,7 @@ function Disc({disc, types, manufacturers, golfers}) {
       <td>{editOn ? <select name="manufacturer_id" value={editData.manufacturer_id} onChange={handleEditChange}>{manu_options}</select> : manuData.manufacturer}</td>
       <td>{editOn ? <select name="golfer_id" value={editData.golfer_id} onChange={handleEditChange}>{golfer_options}</select> : ownerData.owner}</td>
       <td><button onClick={() => setEdit(true)}>Edit</button></td>
-      <td><button>X</button></td>
+      <td><button onClick={() => onDiscDelete(disc.id)}>X</button></td>
     </tr>
   )
 }
