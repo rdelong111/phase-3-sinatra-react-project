@@ -3,29 +3,36 @@ import Discs from "./Discs";
 import AddDiscForm from "./AddDiscForm";
 
 function DiscTable({types, manufacturers, golfers}) {
+  const [shownBag, setBag] = useState('0');
   const [discs, setDiscs] = useState([]);
-  const [active_add_disc, setActiveDisc] = useState(false);
+  const [active_add_disc, setActiveDiscForm] = useState(false);
   const add_disc_btn = (
-    <button id="add_disc" onClick={() => setActiveDisc(true)}>Add Disc</button>
+    <button id="add_disc" onClick={() => setActiveDiscForm(true)}>Add Disc</button>
   );
   const add_disc_form = (
     <AddDiscForm 
       types={types}
       manufacturers={manufacturers}
       golfers={golfers}
-      onFormCancel={() => setActiveDisc(false)}
+      onFormCancel={() => setActiveDiscForm(false)}
+      onDiscSubmit={handleDiscSubmit}
     />
   );
   const golfer_bag_options = golfers.map((golfer) => (
     <option key={golfer.id} value={golfer.id}>{golfer.name}</option>
   ));
 
-  function handleBagChange(e) {
-    if (e.target.value === '0') {
+  function handleSelectChange(e) {
+    setBag(e.target.value);
+    handleBagChange(e.target.value);
+  }
+
+  function handleBagChange(golfer_id=shownBag) {
+    if (golfer_id === '0') {
       getAllDiscs();
     }
     else {
-      fetch(`http://localhost:9292/golfers/${e.target.value}/owned_disc`)
+      fetch(`http://localhost:9292/golfers/${golfer_id}/owned_disc`)
         .then((r) => r.json())
         .then((discData) => setDiscs(discData));
     }
@@ -37,6 +44,23 @@ function DiscTable({types, manufacturers, golfers}) {
       .then((discData) => setDiscs(discData));
   }
 
+  function handleDiscSubmit(disc, currentBag=shownBag) {
+    fetch("http://localhost:9292/discs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(disc)
+    })
+      .then((r) => r.json())
+      .then((discData) => {
+        if (discData.golfer_id === parseInt(currentBag)) {
+          setDiscs([...discs, discData]);
+        }
+        setActiveDiscForm(false);
+      });
+  }
+
   useEffect(() => {
     getAllDiscs();
   }, []);
@@ -46,7 +70,7 @@ function DiscTable({types, manufacturers, golfers}) {
     <div id="disc_container" className="container">
         <label>
           {"Show Golfer Bag: "}
-          <select onChange={handleBagChange}>
+          <select onChange={handleSelectChange}>
             <option value={0}>All</option>{golfer_bag_options}
           </select>
         </label>

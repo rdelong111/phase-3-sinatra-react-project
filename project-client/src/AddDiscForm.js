@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-function AddDiscForm({types, manufacturers, golfers, onFormCancel}) {
+function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}) {
   const [formData, setFormData] = useState({
     name: "", plastic: "", weight_in_g: null, speed: null, glide: null, turn: null, fade: null,
     type_id: types[0].id, manufacturer_id: manufacturers[0].id,  golfer_id: golfers[0].id
@@ -45,7 +45,7 @@ function AddDiscForm({types, manufacturers, golfers, onFormCancel}) {
     else if ((!formData.fade && formData.fade !== 0) || formData.fade < 0 || formData.fade > 5) {
       alert("Enter a correct fade.");
     }
-    else console.log("test");
+    else onDiscSubmit(formData);
   }
 
   return (

@@ -41,4 +41,20 @@ class ApplicationController < Sinatra::Base
   get "/types/:id" do
     Type.find(params[:id]).to_json
   end
+
+  post "/discs" do
+    new_disc = Disc.create(
+      name: params[:name],
+      plastic: params[:plastic],
+      weight_in_g: params[:weight_in_g],
+      speed: params[:speed],
+      glide: params[:glide],
+      turn: params[:turn],
+      fade: params[:fade],
+      type_id: params[:type_id],
+      manufacturer_id: params[:manufacturer_id],
+      golfer_id: params[:golfer_id]
+    )
+    new_disc.to_json
+  end
 end
