@@ -6,6 +6,7 @@ function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}
     type_id: types[0].id, manufacturer_id: manufacturers[0].id,  golfer_id: golfers[0].id
   });
 
+  // options for type, manufacturer, and golfer <select>'s
   const type_options = types.map((type) => (
     <option key={type.id} value={type.id}>{type.name}</option>
   ));
@@ -25,6 +26,7 @@ function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}
     });
   }
 
+  // handles when submitting a new disc and checks for correct inputs
   function handleFormSubmit(e) {
     e.preventDefault();
     if (formData.name === "") {

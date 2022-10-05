@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 
 function Disc({disc, types, manufacturers, golfers, onDiscDelete}) {
-  const [editOn, setEdit] = useState(false);
+  const [editOn, setEdit] = useState(false); // changes if discs is displaying text or inputs
   const [current_type, setType] = useState("");
   const [current_manu, setManu] = useState("");
   const [current_owner, setOwner] = useState("");
@@ -9,6 +9,8 @@ function Disc({disc, types, manufacturers, golfers, onDiscDelete}) {
     name: disc.name, plastic: disc.plastic, weight_in_g: disc.weight_in_g, speed: disc.speed, glide: disc.glide, turn: disc.turn, fade: disc.fade,
     type_id: disc.type_id, manufacturer_id: disc.manufacturer_id,  golfer_id: disc.golfer_id
   });
+
+  // options for type, manufacturer, and golfer <select>'s when editing a disc
   const type_options = types.map((type) => (
     <option key={type.id} value={type.id}>{type.name}</option>
   ));
@@ -28,7 +30,7 @@ function Disc({disc, types, manufacturers, golfers, onDiscDelete}) {
     });
   }
 
-  function handleEdit() {
+  function handleEditSubmit() {
     fetch(`http://localhost:9292/discs/${disc.id}`, {
       method: "PATCH",
       headers: {
@@ -71,7 +73,7 @@ function Disc({disc, types, manufacturers, golfers, onDiscDelete}) {
       <td>{editOn ? <select name="golfer_id" value={editData.golfer_id} onChange={handleEditChange}>{golfer_options}</select> : current_owner}</td>
       <td>
         {editOn ? 
-          <button onClick={handleEdit}>Submit Edit</button>
+          <button onClick={handleEditSubmit}>Submit Edit</button>
           :
           <button onClick={() => setEdit(true)}>Edit</button>
         }

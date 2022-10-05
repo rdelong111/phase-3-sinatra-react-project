@@ -3,7 +3,7 @@ import DiscTable from "./DiscTable";
 import Golfer from "./Golfer";
 
 function App() {
-  const [isLoaded, setLoaded] = useState(false);
+  const [isLoaded, setLoaded] = useState(false); // temporary loading tag
   const [golfers, setGolfers] = useState([]);
   const [classifications, setClasses] = useState([{name: "None"}]);
   const [types, setTypes] = useState([]);
