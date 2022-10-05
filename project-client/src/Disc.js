@@ -2,9 +2,9 @@ import React, {useState, useEffect} from "react";
 
 function Disc({disc, types, manufacturers, golfers, onDiscDelete}) {
   const [editOn, setEdit] = useState(false);
-  const [typeData, setType] = useState({type: ''});
-  const [manuData, setManu] = useState({manufacturer: ''});
-  const [ownerData, setOwner] = useState({owner: ''});
+  const [current_type, setType] = useState("");
+  const [current_manu, setManu] = useState("");
+  const [current_owner, setOwner] = useState("");
   const [editData, setEditData] = useState({
     name: disc.name, plastic: disc.plastic, weight_in_g: disc.weight_in_g, speed: disc.speed, glide: disc.glide, turn: disc.turn, fade: disc.fade,
     type_id: disc.type_id, manufacturer_id: disc.manufacturer_id,  golfer_id: disc.golfer_id
@@ -28,33 +28,54 @@ function Disc({disc, types, manufacturers, golfers, onDiscDelete}) {
     });
   }
 
+  function handleEdit() {
+    fetch(`http://localhost:9292/discs/${disc.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(editData)
+    })
+      .then(() => setEdit(false));
+  }
+
   useEffect(() => {
-    fetch(`http://localhost:9292/types/${disc.type_id}`)
+    fetch(`http://localhost:9292/types/${editData.type_id}`)
       .then((r) => r.json())
-      .then((typeData) => setType({type: typeData.name}));
+      .then((typeData) => setType(typeData.name));
+  }, [editData.type_id]);
 
-    fetch(`http://localhost:9292/manufacturers/${disc.manufacturer_id}`)
+  useEffect(() => {
+    fetch(`http://localhost:9292/manufacturers/${editData.manufacturer_id}`)
       .then((r) => r.json())
-      .then((manuData) => setManu({manufacturer: manuData.name}));
+      .then((manuData) => setManu(manuData.name));
+  }, [editData.manufacturer_id]);
 
-    fetch(`http://localhost:9292/golfers/${disc.golfer_id}`)
+  useEffect(() => {
+    fetch(`http://localhost:9292/golfers/${editData.golfer_id}`)
       .then((r) => r.json())
-      .then((ownerData) => setOwner({owner: ownerData.name}));
-  }, [disc.type_id, disc.manufacturer_id, disc.golfer_id]);
+      .then((ownerData) => setOwner(ownerData.name));
+  }, [editData.golfer_id]);
 
   return (
     <tr className="disc_row">
-      <td>{editOn ? <input type="text" name="name" value={editData.name} onChange={handleEditChange}/> : disc.name}</td>
-      <td>{editOn ? <input type="text" name="plastic" value={editData.plastic} onChange={handleEditChange} /> : disc.plastic}</td>
-      <td>{editOn ? <input type="number" name="weight_in_g" value={editData.weight_in_g} onChange={handleEditChange} /> : disc.weight_in_g}</td>
-      <td>{editOn ? <input type="number" name="speed" value={editData.speed} onChange={handleEditChange} /> : disc.speed}</td>
-      <td>{editOn ? <input type="number" name="glide" value={editData.glide} onChange={handleEditChange} /> : disc.glide}</td>
-      <td>{editOn ? <input type="number" name="turn" value={editData.turn} onChange={handleEditChange} /> : disc.turn}</td>
-      <td>{editOn ? <input type="number" name="fade" value={editData.fade} onChange={handleEditChange} /> : disc.fade}</td>
-      <td>{editOn ? <select name="type_id" value={editData.type_id} onChange={handleEditChange}>{type_options}</select> : typeData.type}</td>
-      <td>{editOn ? <select name="manufacturer_id" value={editData.manufacturer_id} onChange={handleEditChange}>{manu_options}</select> : manuData.manufacturer}</td>
-      <td>{editOn ? <select name="golfer_id" value={editData.golfer_id} onChange={handleEditChange}>{golfer_options}</select> : ownerData.owner}</td>
-      <td><button onClick={() => setEdit(true)}>Edit</button></td>
+      <td>{editOn ? <input type="text" name="name" value={editData.name} onChange={handleEditChange}/> : editData.name}</td>
+      <td>{editOn ? <input type="text" name="plastic" value={editData.plastic} onChange={handleEditChange} /> : editData.plastic}</td>
+      <td>{editOn ? <input type="number" name="weight_in_g" value={editData.weight_in_g} onChange={handleEditChange} /> : editData.weight_in_g}</td>
+      <td>{editOn ? <input type="number" name="speed" value={editData.speed} onChange={handleEditChange} /> : editData.speed}</td>
+      <td>{editOn ? <input type="number" name="glide" value={editData.glide} onChange={handleEditChange} /> : editData.glide}</td>
+      <td>{editOn ? <input type="number" name="turn" value={editData.turn} onChange={handleEditChange} /> : editData.turn}</td>
+      <td>{editOn ? <input type="number" name="fade" value={editData.fade} onChange={handleEditChange} /> : editData.fade}</td>
+      <td>{editOn ? <select name="type_id" value={editData.type_id} onChange={handleEditChange}>{type_options}</select> : current_type}</td>
+      <td>{editOn ? <select name="manufacturer_id" value={editData.manufacturer_id} onChange={handleEditChange}>{manu_options}</select> : current_manu}</td>
+      <td>{editOn ? <select name="golfer_id" value={editData.golfer_id} onChange={handleEditChange}>{golfer_options}</select> : current_owner}</td>
+      <td>
+        {editOn ? 
+          <button onClick={handleEdit}>Submit Edit</button>
+          :
+          <button onClick={() => setEdit(true)}>Edit</button>
+        }
+      </td>
       <td><button onClick={() => onDiscDelete(disc.id)}>X</button></td>
     </tr>
   )
