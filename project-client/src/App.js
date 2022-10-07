@@ -4,28 +4,14 @@ import Golfer from "./Golfer";
 
 function App() {
   const [isLoaded, setLoaded] = useState(false); // temporary loading tag
-  const [golfers, setGolfers] = useState([]);
-  const [classifications, setClasses] = useState([{name: "None"}]);
-  const [types, setTypes] = useState([]);
-  const [manufacturers, setManufacturers] = useState([]);
+  const [seed_data, setSeedData] = useState({});
+  const [change_counter, setCounter] = useState(0); // used for changing totals on golfer card
 
   useEffect(() => {
-    fetch("http://localhost:9292/golfers")
+    fetch("http://localhost:9292/get_seed_info")
       .then((r) => r.json())
-      .then((userData) => setGolfers(userData));
-
-    fetch("http://localhost:9292/classifications")
-      .then((r) => r.json())
-      .then((classData) => setClasses(classData));
-      
-    fetch("http://localhost:9292/types")
-      .then((r) => r.json())
-      .then((typeData) => setTypes(typeData));
-
-    fetch("http://localhost:9292/manufacturers")
-      .then((r) => r.json())
-      .then((manuData) => {
-        setManufacturers(manuData)
+      .then((data) => {
+        setSeedData(data);
         setLoaded(true);
       });
   }, []);
@@ -33,8 +19,8 @@ function App() {
   if (!isLoaded) return <h1>Loading...</h1>
   return (
     <div id="the_app">
-      <Golfer golfers={golfers} classifications={classifications} />
-      <DiscTable types={types} manufacturers={manufacturers} golfers={golfers}/>
+      <Golfer golfers={seed_data.golfers} classifications={seed_data.classifications} change_counter={change_counter} />
+      <DiscTable types={seed_data.types} manufacturers={seed_data.manufacturers} golfers={seed_data.golfers} onTableChange={() => setCounter(change_counter + 1)}/>
     </div>
   );
 }

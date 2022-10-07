@@ -22,7 +22,7 @@ function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}
 
     setFormData({
       ...formData,
-      [e.target.name]: vName === "name" || vName === "plastic" ? e.target.value : parseInt(e.target.value)
+      [e.target.name]: vName === "name" || vName === "plastic" ? e.target.value : parseFloat(e.target.value)
     });
   }
 
@@ -67,19 +67,19 @@ function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}
         </label><br/>
         <label>
           {"Speed: "}
-          <input type="number" name="speed" placeholder="1 - 14" onChange={handleFormChange} />
+          <input type="number" step="0.5" name="speed" placeholder="1 - 14" onChange={handleFormChange} />
         </label><br/>
         <label>
           {"Glide: "}
-          <input type="number" name="glide" placeholder="1 - 7" onChange={handleFormChange} />
+          <input type="number" step="0.5" name="glide" placeholder="1 - 7" onChange={handleFormChange} />
         </label><br/>
         <label>
           {"Turn: "}
-          <input type="number" name="turn" placeholder="-5 - 1" onChange={handleFormChange} />
+          <input type="number" step="0.5" name="turn" placeholder="-5 - 1" onChange={handleFormChange} />
         </label><br/>
         <label>
           {"Fade: "}
-          <input type="number" name="fade" placeholder="0 - 5" onChange={handleFormChange} />
+          <input type="number" step="0.5" name="fade" placeholder="0 - 5" onChange={handleFormChange} />
         </label><br/>
         <label>
           {"Type: "}

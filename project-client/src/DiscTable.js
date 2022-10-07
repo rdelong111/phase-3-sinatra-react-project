@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import Discs from "./Discs";
 import AddDiscForm from "./AddDiscForm";
 
-function DiscTable({types, manufacturers, golfers}) {
+function DiscTable({types, manufacturers, golfers, onTableChange}) {
   const [shownBag, setBag] = useState('0');
   const [discs, setDiscs] = useState([]);
   const [active_add_disc, setActiveDiscForm] = useState(false);
@@ -22,11 +22,13 @@ function DiscTable({types, manufacturers, golfers}) {
     <option key={golfer.id} value={golfer.id}>{golfer.name}</option>
   ));
 
+  // table sorter part1 that stores the bag ID in state
   function handleSelectChange(e) {
     setBag(e.target.value);
     handleBagChange(e.target.value);
   }
 
+  // table sorter that changes based on bag stored in state
   function handleBagChange(golfer_id=shownBag) {
     if (golfer_id === '0') {
       getAllDiscs();
@@ -58,6 +60,7 @@ function DiscTable({types, manufacturers, golfers}) {
           setDiscs([...discs, discData]);
         }
         setActiveDiscForm(false);
+        onTableChange();
       });
   }
 
@@ -69,6 +72,7 @@ function DiscTable({types, manufacturers, golfers}) {
       .then((discData) => {
         const updatedDiscs = discs.filter((disc) => discData.id !== disc.id);
         setDiscs(updatedDiscs);
+        onTableChange();
       });
   }
 
