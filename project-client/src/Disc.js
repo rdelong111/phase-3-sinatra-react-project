@@ -29,17 +29,37 @@ function Disc({disc, types, manufacturers, golfers, onDiscDelete}) {
   }
 
   function handleEditSubmit() {
-    fetch(`http://localhost:9292/discs/${disc.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(editData)
-    })
-      .then(() => {
-        setEdit(false);
-        getConnections(disc.id);
-      });
+    if (editData.name === "") {
+      alert("Enter a name.");
+    }
+    else if (!editData.weight_in_g || editData.weight_in_g <= 0 || editData.weight_in_g > 200) {
+      alert("Enter a correct weight.");
+    }
+    else if (!editData.speed || editData.speed < 1 || editData.speed > 14) {
+      alert("Enter a correct speed.");
+    }
+    else if (!editData.glide || editData.glide < 1 || editData.glide > 7) {
+      alert("Enter a correct glide.");
+    }
+    else if ((!editData.turn && editData.turn !== 0) || editData.turn < -5 || editData.turn > 1) {
+      alert("Enter a correct turn.");
+    }
+    else if ((!editData.fade && editData.fade !== 0) || editData.fade < 0 || editData.fade > 5) {
+      alert("Enter a correct fade.");
+    }
+    else {
+      fetch(`http://localhost:9292/discs/${disc.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(editData)
+      })
+        .then(() => {
+          setEdit(false);
+          getConnections(disc.id);
+        });
+    }
   }
 
   // gets the relationships' names for a disc
