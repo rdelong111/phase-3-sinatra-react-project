@@ -9,6 +9,7 @@ body {
 #the_app {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   margin: 10px;
 }
@@ -59,4 +60,9 @@ table, th, td, table caption {
 
 .disc_row td input {
   width: auto;
+}
+
+#the_statement {
+  width: 100%;
+  text-align: center;
 }

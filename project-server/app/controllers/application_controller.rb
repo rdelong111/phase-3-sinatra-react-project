@@ -35,6 +35,10 @@ class ApplicationController < Sinatra::Base
     Golfer.find(params[:id]).type_amounts.to_json
   end
 
+  get "/golfer_statement/:id" do
+    Golfer.find(params[:id]).statement.to_json
+  end
+
   post "/discs" do
     new_disc = Disc.create(
       name: params[:name],
