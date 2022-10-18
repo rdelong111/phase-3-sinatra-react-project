@@ -7,7 +7,7 @@ class CreateGolfers < ActiveRecord::Migration[6.1]
       t.integer :pdga_number
       t.integer :current_rating
       t.boolean :sponsored
-      t.integer :classification_id
+      t.string :classification
     end
   end
 end

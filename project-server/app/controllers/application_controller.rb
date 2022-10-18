@@ -6,59 +6,16 @@ class ApplicationController < Sinatra::Base
     { message: "Good luck with your project!" }.to_json
   end
 
-  get "/get_seed_info" do
-    {
-      golfers: Golfer.all,
-      classifications: Classification.all,
-      types: Type.all,
-      manufacturers: Manufacturer.all
-    }.to_json
+  get "/golfers" do
+    Golfer.all.to_json(:include => {:discs => {
+      :include => {:manufacturer => {
+        :only => [:name]
+      }}
+    }}, :methods => :type_amounts)
   end
 
-  get "/discs" do
-    Disc.all.to_json
-  end
-
-  get "/discs/:id/connections" do
-    Disc.find(params[:id]).connections.to_json
-  end
-
-  get "/golfers/:id" do
-    Golfer.find(params[:id]).to_json
-  end
-
-  get "/golfers/:id/owned_disc" do
-    Golfer.find(params[:id]).discs.all.to_json
-  end
-
-  get "/golfers/:id/owned_amounts" do
-    Golfer.find(params[:id]).type_amounts.to_json
-  end
-
-  get "/golfer_statement/:id" do
-    Golfer.find(params[:id]).statement.to_json
-  end
-
-  post "/discs" do
-    new_disc = Disc.create(
-      name: params[:name],
-      plastic: params[:plastic],
-      weight_in_g: params[:weight_in_g],
-      speed: params[:speed],
-      glide: params[:glide],
-      turn: params[:turn],
-      fade: params[:fade],
-      type_id: params[:type_id],
-      manufacturer_id: params[:manufacturer_id],
-      golfer_id: params[:golfer_id]
-    )
-    new_disc.to_json
-  end
-
-  delete "/discs/:id" do
-    disc = Disc.find(params[:id])
-    disc.destroy
-    disc.to_json
+  get "/manufacturers" do
+    Manufacturer.all.to_json
   end
 
   patch "/discs/:id" do
@@ -71,10 +28,15 @@ class ApplicationController < Sinatra::Base
       glide: params[:glide],
       turn: params[:turn],
       fade: params[:fade],
-      type_id: params[:type_id],
-      manufacturer_id: params[:manufacturer_id],
-      golfer_id: params[:golfer_id]
+      disc_type: params[:disc_type],
+      manufacturer_id: params[:manufacturer_id]
     )
+    disc.to_json(:include => {:manufacturer => {:only => [:name]}})
+  end
+
+  delete "/discs/:id" do
+    disc = Disc.find(params[:id])
+    disc.destroy
     disc.to_json
   end
 end

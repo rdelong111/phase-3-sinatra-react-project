@@ -12,19 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2022_08_21_195428) do
 
-  create_table "classifications", force: :cascade do |t|
-    t.string "name"
-  end
-
   create_table "discs", force: :cascade do |t|
     t.string "name"
+    t.string "disc_type"
     t.string "plastic"
     t.integer "weight_in_g"
     t.integer "speed"
     t.integer "glide"
     t.float "turn"
     t.float "fade"
-    t.integer "type_id"
     t.integer "manufacturer_id"
     t.integer "golfer_id"
   end
@@ -36,14 +32,10 @@ ActiveRecord::Schema.define(version: 2022_08_21_195428) do
     t.integer "pdga_number"
     t.integer "current_rating"
     t.boolean "sponsored"
-    t.integer "classification_id"
+    t.string "classification"
   end
 
   create_table "manufacturers", force: :cascade do |t|
-    t.string "name"
-  end
-
-  create_table "types", force: :cascade do |t|
     t.string "name"
   end
 

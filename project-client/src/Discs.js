@@ -1,9 +1,9 @@
 import React from "react";
 import Disc from "./Disc";
 
-function Discs({discs, types, manufacturers, golfers, onDiscDelete}) {
+function Discs({discs, manufacturers, onDiscDelete, onDiscEdit}) {
   const discData = discs.map((disc) => (
-    <Disc key={disc.id} disc={disc} types={types} manufacturers={manufacturers} golfers={golfers} onDiscDelete={onDiscDelete} />
+    <Disc key={disc.id} disc={disc} manufacturers={manufacturers} onDiscDelete={onDiscDelete} onDiscEdit={onDiscEdit} />
   ));
 
   return (
