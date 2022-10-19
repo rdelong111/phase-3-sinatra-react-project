@@ -41,5 +41,9 @@ Manufacturer.create(name: "Prodigy")
 Disc.create(name: "Wave", disc_type: "Driver", plastic: "Fission", weight_in_g: 158, speed: 11, glide: 5, turn: -2.5, fade: 2.0, manufacturer_id: 1, golfer_id: 1)
 Disc.create(name: "Mako3", disc_type: "Midrange", plastic: "Champion", weight_in_g: 176, speed: 5, glide: 5, turn: 0, fade: 0, manufacturer_id: 2, golfer_id: 1)
 Disc.create(name: "Mako3", disc_type: "Midrange", plastic: "Champion", weight_in_g: 170, speed: 5, glide: 5, turn: 0, fade: 0, manufacturer_id: 2, golfer_id: 2)
+Disc.create(name: "Buzzz", disc_type: "Driver", plastic: "Fission", weight_in_g: 158, speed: 11, glide: 5, turn: -2.5, fade: 2.0, manufacturer_id: 1, golfer_id: 1)
+Disc.create(name: "Buzzz", disc_type: "Midrange", plastic: "Champion", weight_in_g: 176, speed: 5, glide: 5, turn: 0, fade: 0, manufacturer_id: 2, golfer_id: 1)
+Disc.create(name: "Wave", disc_type: "Driver", plastic: "Fission", weight_in_g: 158, speed: 11, glide: 5, turn: -2.5, fade: 2.0, manufacturer_id: 1, golfer_id: 1)
+Disc.create(name: "Mako3", disc_type: "Midrange", plastic: "Champion", weight_in_g: 176, speed: 5, glide: 5, turn: 0, fade: 0, manufacturer_id: 2, golfer_id: 1)
 
 puts "✅ Done seeding!"

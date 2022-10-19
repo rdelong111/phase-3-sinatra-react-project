@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import Discs from "./Discs";
 import AddDiscForm from "./AddDiscForm";
 
-function DiscTable({discs, golfer, manufacturers, onDiscEdit}) {
+function DiscTable({discs, golfer, manufacturers, onDiscDelete, onDiscEdit}) {
   const [active_add_disc, setActiveDiscForm] = useState(false);
   const add_disc_btn = (
     <button id="add_disc" onClick={() => setActiveDiscForm(true)}>Add Disc</button>
@@ -31,15 +31,6 @@ function DiscTable({discs, golfer, manufacturers, onDiscEdit}) {
       });
   }
 
-  function handleDiscDelete(discID) {
-    fetch(`http://localhost:9292/discs/${discID}`, {
-      method: "DELETE"
-    })
-      .then((r) => r.json())
-      .then((discData) => {
-      });
-  }
-
   return (
     <>
     <div id="disc_container" className="container">
@@ -60,7 +51,7 @@ function DiscTable({discs, golfer, manufacturers, onDiscEdit}) {
               <th></th>
             </tr>
           </thead>
-          <Discs discs={discs} manufacturers={manufacturers} onDiscDelete={handleDiscDelete} onDiscEdit={onDiscEdit}/>
+          <Discs discs={discs} manufacturers={manufacturers} onDiscDelete={onDiscDelete} onDiscEdit={onDiscEdit}/>
         </table>
       </div>
       {/*active_add_disc ? add_disc_form : null*/}

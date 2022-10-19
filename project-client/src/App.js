@@ -28,19 +28,7 @@ function App() {
     });
   }
 
-  function handleDiscEdit(discID, theData) {
-    fetch(`http://localhost:9292/discs/${discID}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(theData)
-    })
-      .then((r) => r.json())
-      .then((updatedData) => updateUserDiscEdit(updatedData));
-  }
-
-  function updateUserDiscEdit(discData) {
+  function handleDiscEdit(discData) {
     const updatedDiscs = current_golfer.discs.map((disc) => {
       return discData.id === disc.id ? discData : disc;
     });
@@ -55,11 +43,17 @@ function App() {
     setGolferData(updatedList);
   }
 
+  function handleDiscDelete(deletedID) {
+    const updatedDiscs = current_golfer.discs.filter((disc) => disc.id !== deletedID);
+    setGolfer({...current_golfer, discs: updatedDiscs});
+    updateGolferList({...current_golfer, discs: updatedDiscs});
+  }
+
   if (!isLoaded) return <h1>Loading...</h1>
   return (
     <div id="the_app">
       <Golfer golfers={golfer_data} current_golfer={current_golfer} onGolferChange={handleGolferChange} />
-      <DiscTable discs={current_golfer.discs} golfer={current_golfer.name} manufacturers={manufacturers} onDiscEdit={handleDiscEdit}/>
+      <DiscTable discs={current_golfer.discs} golfer={current_golfer.name} manufacturers={manufacturers} onDiscDelete={handleDiscDelete} onDiscEdit={handleDiscEdit}/>
     </div>
   );
 }

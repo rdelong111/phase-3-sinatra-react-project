@@ -51,9 +51,26 @@ function Disc({disc, manufacturers, onDiscDelete, onDiscEdit}) {
       alert("Enter a correct fade.");
     }
     else {
-      onDiscEdit(disc.id, editData);
-      setEdit(false);
+      fetch(`http://localhost:9292/discs/${disc.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(editData)
+    })
+      .then((r) => r.json())
+      .then((updatedData) => {
+        onDiscEdit(updatedData);
+        setEdit(false);
+      });
     }
+  }
+
+  function handleDiscDelete() {
+    fetch(`http://localhost:9292/discs/${disc.id}`, {
+      method: "DELETE"
+    })
+      .then(() => onDiscDelete(disc.id))
   }
 
   return (
@@ -74,7 +91,7 @@ function Disc({disc, manufacturers, onDiscDelete, onDiscEdit}) {
           <button onClick={() => setEdit(true)}>Edit</button>
         }
       </td>
-      <td><button onClick={() => onDiscDelete(disc.id)}>X</button></td>
+      <td><button onClick={handleDiscDelete}>X</button></td>
     </tr>
   )
 }
