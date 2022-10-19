@@ -1,20 +1,22 @@
 import React, {useState} from "react";
 
-function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}) {
+function AddDiscForm({manufacturers, golfer, onFormCancel, onDiscSubmit}) {
   const [formData, setFormData] = useState({
     name: "", plastic: "", weight_in_g: null, speed: null, glide: null, turn: null, fade: null,
-    type_id: types[0].id, manufacturer_id: manufacturers[0].id,  golfer_id: golfers[0].id
+    disc_type: "Driver", manufacturer_id: manufacturers[0].id, golfer_id: golfer.id
   });
 
   // options for type, manufacturer, and golfer <select>'s
-  const type_options = types.map((type) => (
-    <option key={type.id} value={type.id}>{type.name}</option>
-  ));
+  const type_options = (
+    <>
+    <option value="Driver">Driver</option>
+    <option value="Fairway">Fairway</option>
+    <option value="Midrange">Midrange</option>
+    <option value="Putter">Putter</option>
+    </>
+  );
   const manu_options = manufacturers.map((manufacturer) => (
     <option key={manufacturer.id} value={manufacturer.id}>{manufacturer.name}</option>
-  ));
-  const golfer_options =  golfers.map((golfer) => (
-    <option key={golfer.id} value={golfer.id}>{golfer.name}</option>
   ));
 
   function handleFormChange(e) {
@@ -22,7 +24,7 @@ function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}
 
     setFormData({
       ...formData,
-      [e.target.name]: vName === "name" || vName === "plastic" ? e.target.value : parseFloat(e.target.value)
+      [vName]: vName === "name" || vName === "plastic" || vName === "disc_type" ? e.target.value : parseFloat(e.target.value)
     });
   }
 
@@ -47,11 +49,27 @@ function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}
     else if ((!formData.fade && formData.fade !== 0) || formData.fade < 0 || formData.fade > 5) {
       alert("Enter a correct fade.");
     }
-    else onDiscSubmit(formData);
+    else handleDiscSubmit(formData);
+  }
+
+  function handleDiscSubmit(discData) {
+    fetch("http://localhost:9292/discs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(discData)
+    })
+      .then((r) => r.json())
+      .then((newDisc) => {
+        onDiscSubmit(newDisc)
+        onFormCancel();
+      });
   }
 
   return (
     <div id="add_disc_container">
+      <h1>Add New Disc</h1>
       <form id="add_disc_form" onSubmit={handleFormSubmit}>
         <label>
           {"Name: "}
@@ -83,15 +101,11 @@ function AddDiscForm({types, manufacturers, golfers, onFormCancel, onDiscSubmit}
         </label><br/>
         <label>
           {"Type: "}
-          <select name="type_id" onChange={handleFormChange}>{type_options}</select>
+          <select name="disc_type" onChange={handleFormChange}>{type_options}</select>
         </label><br/>
         <label>
           {"Manufacturer: "}
           <select name="manufacturer_id" onChange={handleFormChange}>{manu_options}</select>
-        </label><br/>
-        <label>
-          {"Owner: "}
-          <select name="golfer_id" onChange={handleFormChange}>{golfer_options}</select>
         </label><br/>
         <button type="submit">Submit Disc</button>
       </form>

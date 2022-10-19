@@ -52,17 +52,17 @@ function Disc({disc, manufacturers, onDiscDelete, onDiscEdit}) {
     }
     else {
       fetch(`http://localhost:9292/discs/${disc.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(editData)
-    })
-      .then((r) => r.json())
-      .then((updatedData) => {
-        onDiscEdit(updatedData);
-        setEdit(false);
-      });
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(editData)
+      })
+        .then((r) => r.json())
+        .then((updatedData) => {
+          onDiscEdit(updatedData);
+          setEdit(false);
+        });
     }
   }
 

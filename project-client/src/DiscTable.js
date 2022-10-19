@@ -1,22 +1,20 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import Discs from "./Discs";
 import AddDiscForm from "./AddDiscForm";
 
-function DiscTable({discs, golfer, manufacturers, onDiscDelete, onDiscEdit}) {
+function DiscTable({discs, golfer, manufacturers, onDiscDelete, onDiscEdit, onDiscSubmit}) {
   const [active_add_disc, setActiveDiscForm] = useState(false);
   const add_disc_btn = (
     <button id="add_disc" onClick={() => setActiveDiscForm(true)}>Add Disc</button>
   );
-  /*
   const add_disc_form = (
     <AddDiscForm 
-      types={types}
       manufacturers={manufacturers}
-      golfers={golfers}
+      golfer={golfer}
       onFormCancel={() => setActiveDiscForm(false)}
-      onDiscSubmit={handleDiscSubmit}
+      onDiscSubmit={onDiscSubmit}
     />
-  );*/
+  );
 
   function handleDiscSubmit(disc) {
     fetch("http://localhost:9292/discs", {
@@ -54,7 +52,7 @@ function DiscTable({discs, golfer, manufacturers, onDiscDelete, onDiscEdit}) {
           <Discs discs={discs} manufacturers={manufacturers} onDiscDelete={onDiscDelete} onDiscEdit={onDiscEdit}/>
         </table>
       </div>
-      {/*active_add_disc ? add_disc_form : null*/}
+      {active_add_disc ? add_disc_form : null}
     </>
   )
 }

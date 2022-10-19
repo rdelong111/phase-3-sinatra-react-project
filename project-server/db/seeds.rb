@@ -35,7 +35,7 @@ Manufacturer.create(name: "Westside")
 Manufacturer.create(name: "Discraft")
 Manufacturer.create(name: "Dynamic Discs")
 Manufacturer.create(name: "Axiom")
-Manufacturer.create(name: "Dismania")
+Manufacturer.create(name: "Discmania")
 Manufacturer.create(name: "Prodigy")
 
 Disc.create(name: "Wave", disc_type: "Driver", plastic: "Fission", weight_in_g: 158, speed: 11, glide: 5, turn: -2.5, fade: 2.0, manufacturer_id: 1, golfer_id: 1)

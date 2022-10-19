@@ -49,11 +49,23 @@ function App() {
     updateGolferList({...current_golfer, discs: updatedDiscs});
   }
 
+  function handleDiscSubmit(newDisc) {
+    setGolfer({...current_golfer, discs: [...current_golfer.discs, newDisc]});
+    updateGolferList({...current_golfer, discs: [...current_golfer.discs, newDisc]});
+  }
+
   if (!isLoaded) return <h1>Loading...</h1>
   return (
     <div id="the_app">
       <Golfer golfers={golfer_data} current_golfer={current_golfer} onGolferChange={handleGolferChange} />
-      <DiscTable discs={current_golfer.discs} golfer={current_golfer.name} manufacturers={manufacturers} onDiscDelete={handleDiscDelete} onDiscEdit={handleDiscEdit}/>
+      <DiscTable 
+        discs={current_golfer.discs}
+        golfer={current_golfer}
+        manufacturers={manufacturers}
+        onDiscDelete={handleDiscDelete}
+        onDiscEdit={handleDiscEdit}
+        onDiscSubmit={handleDiscSubmit}
+      />
     </div>
   );
 }

@@ -18,6 +18,26 @@ class ApplicationController < Sinatra::Base
     Manufacturer.all.to_json
   end
 
+  get "/discs" do
+    Disc.all.to_json
+  end
+
+  post "/discs" do
+    disc = Disc.create(
+      name: params[:name],
+      plastic: params[:plastic],
+      weight_in_g: params[:weight_in_g],
+      speed: params[:speed],
+      glide: params[:glide],
+      turn: params[:turn],
+      fade: params[:fade],
+      disc_type: params[:disc_type]
+    )
+    Manufacturer.find(params[:manufacturer_id]).discs << disc
+    Golfer.find(params[:golfer_id]).discs << disc
+    disc.to_json(:include => {:manufacturer => {:only => [:name]}})
+  end
+
   patch "/discs/:id" do
     disc = Disc.find(params[:id])
     disc.update(
