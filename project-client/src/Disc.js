@@ -60,7 +60,7 @@ function Disc({disc, manufacturers, onDiscDelete, onDiscEdit}) {
       })
         .then((r) => r.json())
         .then((updatedData) => {
-          onDiscEdit(updatedData);
+          onDiscEdit(updatedData, disc.disc_type);
           setEdit(false);
         });
     }
@@ -70,7 +70,8 @@ function Disc({disc, manufacturers, onDiscDelete, onDiscEdit}) {
     fetch(`http://localhost:9292/discs/${disc.id}`, {
       method: "DELETE"
     })
-      .then(() => onDiscDelete(disc.id))
+      .then((r) => r.json())
+      .then((deletedDisc) => onDiscDelete(deletedDisc));
   }
 
   return (

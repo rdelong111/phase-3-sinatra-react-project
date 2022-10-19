@@ -28,12 +28,21 @@ function App() {
     });
   }
 
-  function handleDiscEdit(discData) {
+  function handleDiscEdit(discData, old_type) {
     const updatedDiscs = current_golfer.discs.map((disc) => {
       return discData.id === disc.id ? discData : disc;
     });
-    setGolfer({...current_golfer, discs: updatedDiscs});
-    updateGolferList({...current_golfer, discs: updatedDiscs})
+    const new_golfer_data = {
+      ...current_golfer,
+      discs: updatedDiscs,
+      type_amounts: {
+        ...current_golfer.type_amounts,
+        [old_type]: current_golfer.type_amounts[old_type] - 1,
+        [discData.disc_type]: current_golfer.type_amounts[discData.disc_type] + 1
+      }
+    };
+    setGolfer(new_golfer_data);
+    updateGolferList(new_golfer_data);
   }
 
   function updateGolferList(newGolferData) {
@@ -43,15 +52,31 @@ function App() {
     setGolferData(updatedList);
   }
 
-  function handleDiscDelete(deletedID) {
-    const updatedDiscs = current_golfer.discs.filter((disc) => disc.id !== deletedID);
-    setGolfer({...current_golfer, discs: updatedDiscs});
-    updateGolferList({...current_golfer, discs: updatedDiscs});
+  function handleDiscDelete(deletedDisc) {
+    const updatedDiscs = current_golfer.discs.filter((disc) => disc.id !== deletedDisc.id);
+    const new_golfer_data = {
+      ...current_golfer,
+      discs: updatedDiscs,
+      type_amounts: {
+        ...current_golfer.type_amounts,
+        [deletedDisc.disc_type]: current_golfer.type_amounts[deletedDisc.disc_type] - 1
+      }
+    };
+    setGolfer(new_golfer_data);
+    updateGolferList(new_golfer_data);
   }
 
   function handleDiscSubmit(newDisc) {
-    setGolfer({...current_golfer, discs: [...current_golfer.discs, newDisc]});
-    updateGolferList({...current_golfer, discs: [...current_golfer.discs, newDisc]});
+    const new_golfer_data = {
+      ...current_golfer,
+      discs: [...current_golfer.discs, newDisc],
+      type_amounts: {
+        ...current_golfer.type_amounts,
+        [newDisc.disc_type]: current_golfer.type_amounts[newDisc.disc_type] + 1
+      }
+    };
+    setGolfer(new_golfer_data);
+    updateGolferList(new_golfer_data);
   }
 
   if (!isLoaded) return <h1>Loading...</h1>

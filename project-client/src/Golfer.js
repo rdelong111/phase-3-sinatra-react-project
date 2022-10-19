@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 
 function Golfer({golfers, current_golfer, onGolferChange}) {
   const golfer_types = current_golfer.type_amounts;
