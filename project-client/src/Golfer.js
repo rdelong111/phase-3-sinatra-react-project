@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
+import AddGolferForm from "./AddGolferForm";
 
-function Golfer({golfers, current_golfer, onGolferChange}) {
+function Golfer({golfers, current_golfer, onGolferChange, onGolferSubmit}) {
+  const [show_add_golfer, setAddForm] = useState(false);
   const golfer_types = current_golfer.type_amounts;
   const disc_amount = Object.values(golfer_types).reduce((prev, curr) => prev + curr, 0);
 
@@ -30,7 +32,12 @@ function Golfer({golfers, current_golfer, onGolferChange}) {
         <select name="golferoptions" onChange={onGolferChange}>
           {golfer_options}
         </select>
-      </label>
+      </label><br /><br />
+      {show_add_golfer ?
+        <AddGolferForm onFormCancel={() => setAddForm(false)} onGolferSubmit={onGolferSubmit} />
+        :
+        <button onClick={() => setAddForm(true)}>Add Golfer</button>
+      }
     </div>
   )
 }

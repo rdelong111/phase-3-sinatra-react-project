@@ -30,18 +30,18 @@ body {
   height: auto;
 }
 
-#add_disc_container {
+.add_form_container {
   text-align: center;
   vertical-align: middle;
 }
 
-#add_disc_form {
+.add_form {
   display: inline-block;
   vertical-align: middle;
   text-align: right;
 }
 
-#add_disc_form select {
+.add_form select {
   width: 50%;
 }
 

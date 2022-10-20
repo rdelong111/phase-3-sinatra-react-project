@@ -14,6 +14,23 @@ class ApplicationController < Sinatra::Base
     }}, :methods => :type_amounts)
   end
 
+  post "/golfers" do
+    golfer = Golfer.create(
+      name: params[:name],
+      location: "#{params[:city]}, #{params[:state]}",
+      age: params[:age],
+      pdga_number: params[:pdga_number],
+      current_rating: params[:current_rating],
+      sponsored: params[:sponsored],
+      classification: params[:classification]
+    )
+    golfer.to_json(:include => {:discs => {
+      :include => {:manufacturer => {
+        :only => [:name]
+      }}
+    }}, :methods => :type_amounts)
+  end
+
   get "/manufacturers" do
     Manufacturer.all.to_json
   end

@@ -68,9 +68,9 @@ function AddDiscForm({manufacturers, golfer, onFormCancel, onDiscSubmit}) {
   }
 
   return (
-    <div id="add_disc_container">
-      <h1>Add New Disc</h1>
-      <form id="add_disc_form" onSubmit={handleFormSubmit}>
+    <div id="add_disc_container" className="add_form_container">
+      <h2>Add New Disc</h2>
+      <form id="add_disc_form" className="add_form" onSubmit={handleFormSubmit}>
         <label>
           {"Name: "}
           <input type="text" name="name" onChange={handleFormChange} />

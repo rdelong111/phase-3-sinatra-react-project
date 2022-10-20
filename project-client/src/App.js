@@ -82,7 +82,12 @@ function App() {
   if (!isLoaded) return <h1>Loading...</h1>
   return (
     <div id="the_app">
-      <Golfer golfers={golfer_data} current_golfer={current_golfer} onGolferChange={handleGolferChange} />
+      <Golfer
+        golfers={golfer_data}
+        current_golfer={current_golfer}
+        onGolferChange={handleGolferChange} 
+        onGolferSubmit={(newGolfer) => setGolferData([...golfer_data, newGolfer])}
+      />
       <DiscTable 
         discs={current_golfer.discs}
         golfer={current_golfer}
