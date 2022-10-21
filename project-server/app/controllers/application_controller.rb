@@ -35,8 +35,9 @@ class ApplicationController < Sinatra::Base
     Manufacturer.all.to_json
   end
 
-  get "/discs" do
-    Disc.all.to_json
+  post "/manufacturers" do
+    manufacturer = Manufacturer.create(name: params[:name])
+    manufacturer.to_json
   end
 
   post "/discs" do

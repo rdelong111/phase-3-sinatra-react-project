@@ -16,19 +16,6 @@ function DiscTable({discs, golfer, manufacturers, onDiscDelete, onDiscEdit, onDi
     />
   );
 
-  function handleDiscSubmit(disc) {
-    fetch("http://localhost:9292/discs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(disc)
-    })
-      .then((r) => r.json())
-      .then((discData) => {
-      });
-  }
-
   return (
     <>
     <div id="disc_container" className="container">

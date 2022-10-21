@@ -62,7 +62,11 @@ function AddDiscForm({manufacturers, golfer, onFormCancel, onDiscSubmit}) {
     })
       .then((r) => r.json())
       .then((newDisc) => {
-        onDiscSubmit(newDisc)
+        onDiscSubmit(newDisc);
+        setFormData({
+          name: "", plastic: "", weight_in_g: null, speed: null, glide: null, turn: null, fade: null,
+          disc_type: "Driver", manufacturer_id: manufacturers[0].id, golfer_id: golfer.id
+        });
         onFormCancel();
       });
   }

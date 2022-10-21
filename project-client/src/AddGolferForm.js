@@ -7,7 +7,6 @@ function AddGolferForm({onFormCancel, onGolferSubmit}) {
   const [formData, setFormData] = useState({
     name: "", city: "", state: states[0], age: 0, pdga_number: 0, current_rating: 0, sponsored: false, classification: "None"
   });
-  console.log(formData);
 
   const state_options = states.map((state) => (
     <option key={state} value={state}>{state}</option>
@@ -41,6 +40,7 @@ function AddGolferForm({onFormCancel, onGolferSubmit}) {
       .then((r) => r.json())
       .then((newGolfer) => {
         onGolferSubmit(newGolfer);
+        setFormData({name: "", city: "", state: states[0], age: 0, pdga_number: 0, current_rating: 0, sponsored: false, classification: "None"});
         onFormCancel();
       });
   }

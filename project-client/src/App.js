@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import DiscTable from "./DiscTable";
 import Golfer from "./Golfer";
+import Manufacturers from "./Manufacturers";
 
 function App() {
   const [isLoaded, setLoaded] = useState(false); // temporary loading tag
@@ -79,6 +80,10 @@ function App() {
     updateGolferList(new_golfer_data);
   }
 
+  function handleManuSubmit(newManu) {
+    setManus([...manufacturers, newManu]);
+  }
+
   if (!isLoaded) return <h1>Loading...</h1>
   return (
     <div id="the_app">
@@ -96,6 +101,7 @@ function App() {
         onDiscEdit={handleDiscEdit}
         onDiscSubmit={handleDiscSubmit}
       />
+      <Manufacturers manufacturers={manufacturers} onManuSubmit={handleManuSubmit} />
     </div>
   );
 }
