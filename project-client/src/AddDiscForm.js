@@ -3,7 +3,7 @@ import React, {useState} from "react";
 function AddDiscForm({manufacturers, golfer, onFormCancel, onDiscSubmit}) {
   const [formData, setFormData] = useState({
     name: "", plastic: "", weight_in_g: null, speed: null, glide: null, turn: null, fade: null,
-    disc_type: "Driver", manufacturer_id: manufacturers[0].id, golfer_id: golfer.id
+    disc_type: "Driver", manufacturer_id: manufacturers[0].id
   });
 
   // options for type, manufacturer, and golfer <select>'s
@@ -53,7 +53,7 @@ function AddDiscForm({manufacturers, golfer, onFormCancel, onDiscSubmit}) {
   }
 
   function handleDiscSubmit(discData) {
-    fetch("http://localhost:9292/discs", {
+    fetch(`http://localhost:9292/golfers/${golfer.id}/discs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -65,7 +65,7 @@ function AddDiscForm({manufacturers, golfer, onFormCancel, onDiscSubmit}) {
         onDiscSubmit(newDisc);
         setFormData({
           name: "", plastic: "", weight_in_g: null, speed: null, glide: null, turn: null, fade: null,
-          disc_type: "Driver", manufacturer_id: manufacturers[0].id, golfer_id: golfer.id
+          disc_type: "Driver", manufacturer_id: manufacturers[0].id
         });
         onFormCancel();
       });

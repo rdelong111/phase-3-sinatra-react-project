@@ -41,8 +41,9 @@ class ApplicationController < Sinatra::Base
     manufacturer.to_json
   end
 
-  post "/discs" do
-    disc = Disc.create(
+  post "/golfers/:id/discs" do
+    golfer = Golfer.find(params[:id])
+    disc = golfer.discs.create(
       name: params[:name],
       plastic: params[:plastic],
       weight_in_g: params[:weight_in_g],
@@ -53,7 +54,6 @@ class ApplicationController < Sinatra::Base
       disc_type: params[:disc_type]
     )
     Manufacturer.find(params[:manufacturer_id]).discs << disc
-    Golfer.find(params[:golfer_id]).discs << disc
     disc.to_json(:include => {:manufacturer => {:only => [:name]}})
   end
 
