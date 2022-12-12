@@ -5,7 +5,7 @@ Golfer.create(
   location: "Fort Walton Beach, FL",
   age: 26,
   pdga_number: 225221,
-  current_rating: 0,
+  current_rating: 830,
   sponsored: false,
   classification: "Amateur"
 )

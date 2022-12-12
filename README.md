@@ -29,6 +29,16 @@ To install the required gems:
 ```console
 $ bundle i
 ```
+Execute the migrations and check the status:
+```console
+$ bundle exec rake db:migrate
+$ bundle exec rake db:migrate:status
+```
+
+Load the tables with the pre-made data:
+```console
+$ bundle exec rake db:seed
+```
 
 Once gems are installed, run the server:
 ```console
@@ -39,7 +49,7 @@ This will run your server on port
 [http://localhost:9292](http://localhost:9292).
 
 ### Frontend Setup
-On the other terminal, navigate to the project client directory:
+Once the server is running navigate to the project client directory in another terminal:
 ```console
 $ cd project-client
 ```
@@ -54,8 +64,13 @@ Once dependencies are installed AND the server is running:
 $ npm start
 ```
 
+The app will then automatically load on your default web browser.
+![The App](/images/webpage.png)
+
 ## Resources
 Copyright © 1998-2022. Professional Disc Golf Association. All Rights Reserved.
 
 - [PDGA Website](https://www.pdga.com/)
 - [Player Info Ex](https://www.pdga.com/player/225221)
+- [Backend Starter](https://github.com/learn-co-curriculum/phase-3-sinatra-react-project/fork)
+- [create-react-app](https://create-react-app.dev/docs/getting-started)
