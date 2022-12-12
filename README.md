@@ -25,7 +25,7 @@ On one terminal, navigate to the project server directory:
 $ cd project-server
 ```
 
-To install the required gems:
+Install the required gems:
 ```console
 $ bundle i
 ```
@@ -40,7 +40,7 @@ Load the tables with the pre-made data:
 $ bundle exec rake db:seed
 ```
 
-Once gems are installed, run the server:
+Finally, run the server:
 ```console
 $ bundle exec rake server
 ```
@@ -54,7 +54,7 @@ Once the server is running navigate to the project client directory in another t
 $ cd project-client
 ```
 
-To install the required dependencies:
+Install the required dependencies:
 ```console
 $ npm i
 ```
